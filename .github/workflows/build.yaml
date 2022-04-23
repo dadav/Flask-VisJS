@@ -20,16 +20,15 @@ on:
 
 jobs:
   linting:
-    name: Lint with pylint and flake8
+    name: Lint with flake8
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - run: pip install flake8 pylint
+      - run: pip install flake8
       - run: flake8 --ignore=E501 --show-source flask_visjs setup.py
-      - run: pylint --disable=line-too-long flask_visjs setup.py
   build:
     needs: linting
     name: Build the package

@@ -39,19 +39,19 @@ class Network(_Network):
                 VERSION=current_app.config['VISJS_VERSION'],
                 FILENAME=current_app.config['VISJS_JS_FILENAME']
             )
-
-        with self.template_lock:
-            path = os.path.join(os.path.dirname(__file__), 'templates', 'pyvis.js.j2')
-            self.set_template(path)
-            pyvis_plain_js = self.generate_html(notebook=False)
-        return Markup(f'<script type="text/javascript" src="{js_url}"></script></br><script type="text/javascript">{pyvis_plain_js}</script>')
+        return Markup(f'<script type="text/javascript" src="{js_url}"></script>')
 
     def inject_graph(self):
         with self.template_lock:
-            path = current_app.config['VISJS_CUSTOM_TEMPLATE_PATH'] or os.path.join(os.path.dirname(__file__), 'templates', 'pyvis.html.j2')
+            path = current_app.config['VISJS_CUSTOM_TEMPLATE_PATH'] \
+                or os.path.join(os.path.dirname(__file__), 'templates', 'pyvis.html.j2')
             self.set_template(path)
             pyvis_plain_graph = self.generate_html(notebook=False)
-        return Markup(pyvis_plain_graph)
+            path = os.path.join(os.path.dirname(__file__), 'templates', 'pyvis.js.j2')
+            self.set_template(path)
+            pyvis_plain_js = self.generate_html(notebook=False)
+            graph_js = f'<script type="text/javascript">{pyvis_plain_js}</script>'
+        return Markup(pyvis_plain_graph + graph_js)
 
 
 class _VisJSBase:
@@ -75,8 +75,15 @@ class _VisJSBase:
         app.config.setdefault('VISJS_CUSTOM_TEMPLATE_PATH', None)
         app.config.setdefault('VISJS_VERSION', self.VISJS_VERSION)
 
-        blueprint = Blueprint('visjs', __name__, static_folder='static', static_url_path='/visjs/static', template_folder='templates')
+        blueprint = Blueprint('visjs', __name__,
+                              static_folder='static',
+                              static_url_path='/visjs/static',
+                              template_folder='templates')
         app.register_blueprint(blueprint)
+
+        if not hasattr(app, 'extensions'):
+            app.extensions = {}
+        app.extensions['visjs'] = self
 
 
 class VisJS4(_VisJSBase):

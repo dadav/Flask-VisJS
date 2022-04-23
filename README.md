@@ -21,7 +21,7 @@ There are the following options available:
 
 | Option        | Default           | Description  |
 | ------------- | ------------- | ----- |
-| VISJS_CDN_TEMPLATE | https://cdnjs.cloudflare.com/ajax/libs/vis/{VERSION}/{FILENAME}' | The CDN to use (only relevant if not localy served) |
+| VISJS_CDN_TEMPLATE | https://cdnjs.cloudflare.com/ajax/libs/vis/{VERSION}/{FILENAME} | The CDN to use (only relevant if not localy served) |
 | VISJS_JS_FILENAME | vis.min.js | The filename of the javascript file |
 | VISJS_CSS_FILENAME | vis.min.css | The filename of the css file |
 | VISJS_SERVE_LOCAL | True | If the files should be served localy or from a CDN |

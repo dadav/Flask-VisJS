@@ -1,20 +1,45 @@
-.. Flask-VisJS documentation master file, created by
-   sphinx-quickstart on Sat Apr 23 20:54:17 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Flask-VisJS
+===========
 
-Welcome to Flask-VisJS's documentation!
-=======================================
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
+   basic
+   examples
 
+Development
+-----------
 
-Indices and tables
-==================
+We welcome all kinds of contributions. You can build the development environment
+locally with the following commands:
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. code-block:: bash
+
+    $ git clone git@github.com:dadav/Flask-VisJS.git
+    $ cd $_
+    $ python3 -m venv venv
+    $ . venv/bin/activate
+    $ pip install pip-tools
+    $ pip-sync requirements/dev.txt
+
+Run the tests with pytest:
+
+.. code-block:: bash
+
+    $ pytest
+
+Or run the full checks with tox:
+
+.. code-block:: bash
+
+    $ tox
+
+License
+-------
+
+This project is licensed under the MIT License (see the ``LICENSE`` file for
+details). Some macros were part of Flask-Bootstrap and were modified under
+the terms of its BSD License.

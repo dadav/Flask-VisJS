@@ -18,16 +18,9 @@ pip install Flask-VisJS
 
 ## Configuration
 
-There are the following options available:
+Please use [https://flask-visjs.readthedocs.io/en/latest/](https://flask-visjs.readthedocs.io/en/latest/)
 
-| Option        | Default           | Description  |
-| ------------- | ------------- | ----- |
-| VISJS_CDN_TEMPLATE | https://cdnjs.cloudflare.com/ajax/libs/vis/{VERSION}/{FILENAME} | The CDN to use (only relevant if not localy served) |
-| VISJS_JS_FILENAME | vis.min.js | The filename of the javascript file |
-| VISJS_CSS_FILENAME | vis.min.css | The filename of the css file |
-| VISJS_SERVE_LOCAL | True | If the files should be served localy or from a CDN |
-| VISJS_CUSTOM_TEMPLATE_PATH | None | The path for a custom template (used by pyvis) |
-| VISJS_VERSION | 4.21.0 (depends on the class) | The version of the visjs library |
+Work in progress...
 
 ## Example
 
@@ -40,16 +33,18 @@ VisJS4().init_app(app)
 
 @app.route('/')
 def index():
-    net = Network('500px', '500px')
+    net = Network("500px", "500px")
     net.add_node(0, label="Node 0")
+    net.add_node(1, label="Node 1")
+    net.add_edge(0, 1)
     return render_template_string("""
 <html>
     <head>
       {{ net.inject_css() }}
     </head>
     <body>
-      {{ net.inject_graph() }}
       {{ net.inject_js() }}
+      {{ net.inject_graph() }}
     </body>
 </html>
 """, net=net)

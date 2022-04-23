@@ -3,7 +3,7 @@
 ![PyPI - License](https://img.shields.io/pypi/l/Flask-VisJS)
 [![Current version on PyPI](https://img.shields.io/pypi/v/Flask-VisJS)](https://pypi.org/project/Flask-VisJS/)
 [![Lint/Build](https://github.com/dadav/Flask-VisJS/actions/workflows/build.yaml/badge.svg)](https://github.com/dadav/Flask-VisJS/actions/)
-[![Coverage Status](https://coveralls.io/repos/github/dadav/Flask-VisJS/badge.svg?branch=main)](https://coveralls.io/github/dadav/Flask-VisJS?branch=main)
+[![Coverege](https://codecov.io/gh/dadav/Flask-VisJS/branch/main/graph/badge.svg?token=XAM1MHF3NC)](https://codecov.io/gh/dadav/Flask-VisJS)
 
 ![Homedir](./img/visjs.png)
 

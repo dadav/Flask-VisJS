@@ -43,7 +43,8 @@ class Network(_Network):
 
     def inject_graph(self):
         with self.template_lock:
-            path = current_app.config['VISJS_CUSTOM_TEMPLATE_PATH'] or os.path.join(os.path.dirname(__file__), 'templates', 'pyvis.html.j2')
+            path = current_app.config['VISJS_CUSTOM_TEMPLATE_PATH'] \
+                or os.path.join(os.path.dirname(__file__), 'templates', 'pyvis.html.j2')
             self.set_template(path)
             pyvis_plain_graph = self.generate_html(notebook=False)
             path = os.path.join(os.path.dirname(__file__), 'templates', 'pyvis.js.j2')
@@ -74,7 +75,10 @@ class _VisJSBase:
         app.config.setdefault('VISJS_CUSTOM_TEMPLATE_PATH', None)
         app.config.setdefault('VISJS_VERSION', self.VISJS_VERSION)
 
-        blueprint = Blueprint('visjs', __name__, static_folder='static', static_url_path='/visjs/static', template_folder='templates')
+        blueprint = Blueprint('visjs', __name__,
+                              static_folder='static',
+                              static_url_path='/visjs/static',
+                              template_folder='templates')
         app.register_blueprint(blueprint)
 
         if not hasattr(app, 'extensions'):

@@ -77,6 +77,10 @@ class _VisJSBase:
         blueprint = Blueprint('visjs', __name__, static_folder='static', static_url_path='/visjs/static', template_folder='templates')
         app.register_blueprint(blueprint)
 
+        if not hasattr(app, 'extensions'):
+            app.extensions = {}
+        app.extensions['visjs'] = self
+
 
 class VisJS4(_VisJSBase):
     """

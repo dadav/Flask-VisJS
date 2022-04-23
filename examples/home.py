@@ -10,7 +10,7 @@ VisJS4().init_app(app)
 @app.route('/')
 def index():
     """
-    Network is based on pyvis's network class, you can check out their docs.
+    Visualize some files from the homedir
     """
     net = Network("1024px", "1024px")
     home = Path.home()

@@ -1,7 +1,6 @@
 from flask import Flask, render_template_string
 from flask_visjs import VisJS4, Network
 from flask_socketio import SocketIO, emit
-from pathlib import Path
 from scapy.sendrecv import sniff
 from scapy.layers.inet import IP, TCP
 from collections import defaultdict
@@ -51,7 +50,6 @@ def index():
     net = Network("1024px", "1024px")
     socketio.start_background_task(start_sniffing)
     return render_template_string("""
-
 <html>
     <head>
       {{ net.inject_css() }}
@@ -64,7 +62,7 @@ def index():
         var container = document.getElementById('mynetwork');
         var options = {edges: {arrows: {to: {enabled: true}}}};
         var network, edges, nodes, data;
-        nodes = new vis.DataSet([{'id': 0, 'label': 'test'}]);
+        nodes = new vis.DataSet([]);
         edges = new vis.DataSet([]);
         data = {nodes: nodes, edges: edges};
         network = new vis.Network(container, data, options);
@@ -77,7 +75,6 @@ def index():
             network.redraw();
         });
       </script>
-
     </body>
 </html>
 """, net=net)

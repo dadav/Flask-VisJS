@@ -6,7 +6,7 @@ from threading import Lock
 from flask import current_app, Blueprint, url_for
 from markupsafe import Markup
 from pyvis.network import Network as _Network
-from flask_visjs._version import __version__
+from flask_visjs._version import __version__  # noqa: F401
 
 
 class Network(_Network):

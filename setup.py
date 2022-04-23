@@ -1,4 +1,3 @@
-import os
 from setuptools import setup
 
 with open("flask_visjs/_version.py", "r", encoding="utf-8") as fh:

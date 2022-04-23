@@ -10,6 +10,9 @@ from flask_visjs._version import __version__
 
 
 class Network(_Network):
+    """
+    Wrapper for the pyvis network class
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.template_lock = Lock()
@@ -50,10 +53,11 @@ class Network(_Network):
             pyvis_plain_graph = self.generate_html(notebook=False)
         return Markup(pyvis_plain_graph)
 
-# def vars2id(*somevars):
-#     return ''.join([str(id(v))[:4] for v in somevars])
 
 class _VisJSBase:
+    """
+    Baseclass for different visjs versions
+    """
     VISJS_VERSION = None
 
     def __init__(self, app=None):
@@ -74,7 +78,9 @@ class _VisJSBase:
         blueprint = Blueprint('visjs', __name__, static_folder='static', static_url_path='/visjs/static', template_folder='templates')
         app.register_blueprint(blueprint)
 
-        # app.jinja_env.filters['vars2id'] = vars2id
 
 class VisJS4(_VisJSBase):
+    """
+    Visjs Version 4.x
+    """
     VISJS_VERSION = '4.21.0'

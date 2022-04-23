@@ -30,8 +30,8 @@ def index():
       {{ net.inject_css() }}
     </head>
     <body>
-      {{ net.inject_graph() }}
       {{ net.inject_js() }}
+      {{ net.inject_graph() }}
     </body>
 </html>
 """, net=net)

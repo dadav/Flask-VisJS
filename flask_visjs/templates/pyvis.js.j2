@@ -1,0 +1,149 @@
+// initialize global variables.
+var edges;
+var nodes;
+var network;
+var container;
+var options, data;
+
+// This method is responsible for drawing the graph, returns the drawn network
+function drawGraph() {
+    var container = document.getElementById('mynetwork');
+
+    {% if use_DOT %}
+
+    var DOTstring = "{{dot_lang|safe}}";
+    data = vis.network.dotparser.DOTToGraph(DOTstring);
+
+    var options = data.options;
+    options = Object.assign(options, {
+        nodes: {
+            shape: "dot"
+        },
+    });
+    {% if options %}
+    options = Object.assign(options, {{options|safe}})
+    {% endif %}
+
+    {% else %}
+
+    // parsing and collecting nodes and edges from the python
+    nodes = new vis.DataSet({{nodes|tojson}});
+    edges = new vis.DataSet({{edges|tojson}});
+
+    // adding nodes and edges to the graph
+    data = {nodes: nodes, edges: edges};
+
+    var options = {{options|safe}};
+
+    {% endif %}
+
+    {% if conf %}
+    // if this network requires displaying the configure window,
+    // put it in its div
+    options.configure["container"] = document.getElementById("config");
+    {% endif %}
+
+    network = new vis.Network(container, data, options);
+
+    {% if tooltip_link %}
+    // make a custom popup
+    var popup = document.createElement("div");
+    popup.className = 'popup';
+    popupTimeout = null;
+    popup.addEventListener('mouseover', function () {
+        console.log(popup)
+        if (popupTimeout !== null) {
+            clearTimeout(popupTimeout);
+            popupTimeout = null;
+        }
+    });
+    popup.addEventListener('mouseout', function () {
+        if (popupTimeout === null) {
+            hidePopup();
+        }
+    });
+    container.appendChild(popup);
+
+
+    // use the popup event to show
+    network.on("showPopup", function (params) {
+        showPopup(params);
+    });
+
+    // use the hide event to hide it
+    network.on("hidePopup", function (params) {
+        hidePopup();
+    });
+
+
+    // hiding the popup through css
+    function hidePopup() {
+        popupTimeout = setTimeout(function () { popup.style.display = 'none'; }, 500);
+    }
+
+    // showing the popup
+    function showPopup(nodeId) {
+
+        // get the data from the vis.DataSet
+        var nodeData = nodes.get(nodeId);
+        // get the position of the node
+        var posCanvas = network.getPositions([nodeId])[nodeId];
+
+        if (!nodeData) {
+            var edgeData = edges.get(nodeId);
+            var poses = network.getPositions([edgeData.from, edgeData.to]);
+            var middle_x = (poses[edgeData.to].x - poses[edgeData.from].x) * 0.5;
+            var middle_y = (poses[edgeData.to].y - poses[edgeData.from].y) * 0.5;
+            posCanvas = poses[edgeData.from];
+            posCanvas.x = posCanvas.x + middle_x;
+            posCanvas.y = posCanvas.y + middle_y;
+
+            popup.innerHTML = edgeData.title;
+        } else {
+            popup.innerHTML = nodeData.title;
+            // get the bounding box of the node
+            var boundingBox = network.getBoundingBox(nodeId);
+            posCanvas.x = posCanvas.x + 0.5 * (boundingBox.right - boundingBox.left);
+            posCanvas.y = posCanvas.y + 0.5 * (boundingBox.top - boundingBox.bottom);
+        };
+
+        // convert coordinates to the DOM space
+        var posDOM = network.canvasToDOM(posCanvas);
+
+        // Give it an offset
+        posDOM.x += 10;
+        posDOM.y -= 20;
+
+        // show and place the tooltip.
+        popup.style.display = 'block';
+        popup.style.top = posDOM.y + 'px';
+        popup.style.left = posDOM.x + 'px';
+    }
+    {% endif %}
+
+
+    {% if nodes|length > 100 and physics_enabled %}
+    network.on("stabilizationProgress", function(params) {
+      document.getElementById('loadingBar').removeAttribute("style");
+      var maxWidth = 496;
+      var minWidth = 20;
+      var widthFactor = params.iterations/params.total;
+      var width = Math.max(minWidth,maxWidth * widthFactor);
+
+      document.getElementById('bar').style.width = width + 'px';
+      document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+  });
+  network.once("stabilizationIterationsDone", function() {
+      document.getElementById('text').innerHTML = '100%';
+      document.getElementById('bar').style.width = '496px';
+      document.getElementById('loadingBar').style.opacity = 0;
+      // really clean the dom element
+      setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+  });
+    {% endif %}
+
+    return network;
+
+}
+
+drawGraph();

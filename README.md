@@ -40,7 +40,7 @@ VisJS4().init_app(app)
 
 @app.route('/')
 def index():
-    net = Network("500px", "500px")
+    net = Network('500px', '500px')
     net.add_node(0, label="Node 0")
     return render_template_string("""
 <html>

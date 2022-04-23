@@ -31,6 +31,7 @@ jobs:
       - run: flake8 --ignore=E501 --show-source flask_visjs setup.py
       - run: pylint --disable=line-too-long flask_visjs setup.py
   build:
+    needs: linting
     name: Build the package
     strategy:
       fail-fast: false
@@ -43,7 +44,7 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
-      - run: python -m pip install --upgrade pip wheel setuptools
+      - run: python -m pip install --upgrade pip wheel setuptools build
       - name: get pip cache dir
         id: pip-cache
         run: echo "::set-output name=dir::$(pip cache dir)"

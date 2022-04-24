@@ -54,6 +54,15 @@ html_sidebars = {
 # Don't show the source
 html_show_sourcelink = False
 
+# -- Options for HTMLHelp output ---------------------------------------------
+
+# Output file base name for HTML help builder.
+htmlhelp_basename = 'VisJS-Flaskdoc'
+
+html_css_files = [
+    'css/custom.css',
+]
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
@@ -73,7 +82,7 @@ html_theme = 'flask'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ['_static']
+html_static_path = ['_static']
 
 # -- Options for todo extension ----------------------------------------------
 

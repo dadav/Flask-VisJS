@@ -1,4 +1,4 @@
-Run the exaples
+Run the examples
 ===============
 
 Type these commands in the terminal:

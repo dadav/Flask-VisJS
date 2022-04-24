@@ -47,9 +47,9 @@ templates_path = ['_templates']
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
 #
-html_sidebars = {
-    '**': ['sidebarintro.html'],
-}
+# html_sidebars = {
+#     '**': ['sidebarintro.html'],
+# }
 
 # Don't show the source
 html_show_sourcelink = False
@@ -57,7 +57,7 @@ html_show_sourcelink = False
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'VisJS-Flaskdoc'
+htmlhelp_basename = 'flask-visjsdoc'
 
 html_css_files = [
     'css/custom.css',
@@ -77,7 +77,16 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'flask'
+html_theme = 'alabaster'
+
+html_theme_options = {
+    'github_user': 'dadav',
+    'github_repo': 'Flask-VisJS',
+    'github_banner': True,
+    'github_button': True,
+    'github_type': 'star',
+    'fixed_sidebar': True,
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

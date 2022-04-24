@@ -1,5 +1,5 @@
 Run the examples
-===============
+================
 
 Type these commands in the terminal:
 

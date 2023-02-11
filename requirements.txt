@@ -18,7 +18,7 @@ flask==2.1.1
     # via Flask-VisJS (setup.py)
 importlib-metadata==4.11.3
     # via flask
-ipython==8.2.0
+ipython==8.10.0
     # via pyvis
 itsdangerous==2.1.2
     # via flask

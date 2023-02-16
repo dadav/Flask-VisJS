@@ -62,7 +62,7 @@ traitlets==5.1.1
     #   matplotlib-inline
 wcwidth==0.2.5
     # via prompt-toolkit
-werkzeug==2.1.1
+werkzeug==2.2.3
     # via flask
 zipp==3.8.0
     # via importlib-metadata

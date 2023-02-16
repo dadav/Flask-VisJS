@@ -8,17 +8,15 @@ click==8.1.2
     # via flask
 flask==2.1.1
     # via -r examples.in
-importlib-metadata==4.11.3
-    # via flask
 itsdangerous==2.1.2
     # via flask
 jinja2==3.1.1
     # via flask
 markupsafe==2.1.1
-    # via jinja2
+    # via
+    #   jinja2
+    #   werkzeug
 scapy==2.4.5
     # via -r examples.in
-werkzeug==2.1.1
+werkzeug==2.2.3
     # via flask
-zipp==3.8.0
-    # via importlib-metadata
